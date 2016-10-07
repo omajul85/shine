@@ -10,4 +10,8 @@
 	<p>
 		Future home of Shine's Dashboard
 	</p>
+	<%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+	<% if user_signed_in? %>
+		<%= link_to "Edit user", edit_user_registration_path %>
+	<% end %>
 </section>
