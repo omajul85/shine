@@ -62,5 +62,18 @@ app.controller("CustomerDetailController",
 	["$scope", "$http", "$routeParams", function($scope , $http , $routeParams) {
 
 	// The service $routeParams extracts the customer ID out of the route
-	}
-]);
+
+	var customerId = $routeParams.id;
+	$scope.customer = {};
+
+	$http.get("/customers/" + customerId +".json")
+	.then(
+		function(response) {
+			$scope.customer = response.data;
+		},
+		function(response) {
+			alert("There was a problem: " + response.status);
+		}
+	);
+
+}]);
