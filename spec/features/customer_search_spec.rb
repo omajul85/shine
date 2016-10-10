@@ -57,7 +57,7 @@ feature "Customer Search" do
 		end
 		
 		within "section.search-results" do
-			puts page.html
+			# puts page.html
 			# save_screenshot("/home/omajul/Pictures/Shine/img.png")
 			expect(page).to have_content("Results")
 			expect(page.all("ol li.list-group-item").count).to eq(4)
