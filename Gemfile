@@ -40,6 +40,7 @@ group :development, :test do
 	gem 'poltergeist'
 	# END_HIGHLIGHT
 	gem 'database_cleaner'
+  gem 'teaspoon-jasmine'
 end
 
 group :development do
