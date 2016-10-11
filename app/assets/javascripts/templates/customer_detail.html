@@ -1,4 +1,4 @@
-<article class="customer-details">
+<!-- <article class="customer-details">
 	<h1>Customer {{customer.id}}</h1>
 	<h2>{{customer.first_name}} {{customer.last_name}}</h2>
 	<h3>{{customer.email}}</h3>
@@ -7,4 +7,143 @@
 		<small class="text-uppercase">Joined</small>
 		{{customer.created_at | date}}
 	</h5>
-</article>
+</article> -->
+
+<form>
+	<div class="row">
+		<div class="col-md-6">
+			<article class="panel panel-primary">
+				<header class="panel-heading">
+					<h1 class="h3">Customer Info</h1>
+				</header>
+				<section class="panel-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="sr-only" for="first-name">First Name</label>
+								<input name="first-name" type="text" value="Bob" class="form-control">
+							</div>					
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="sr-only" for="last-name">Last Name</label>
+								<input name="last-name" type="text" value="Jones" class="form-control">
+							</div>					
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="sr-only" for="first-name">Username</label>
+								<div class="input-group">
+									<div class="input-group-addon">@</div>
+									<input name="username" type="text" value="bobert123" class="form-control">
+								</div>
+							</div>					
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="email">Email</label>
+						<input name="email" type="text" value="bobbyj@somewhere.net" class="form-control">
+					</div>
+				</section>
+				<footer class="panel-footer">
+					<label for="joined">Joined</label> 12/13/2016
+				</footer>
+			</article>
+
+			<article class="panel panel-default">
+				<header class="panel-heading">
+					<h1 class="h3">Shipping Address</h1>
+				</header>
+				<section class="panel-body">
+					<div class="form-group">
+						<label class="sr-only" for="street-address">Street Address</label>
+						<input name="street-address" type="text" value="123 Any St" class="form-control">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="street-address-extra">Street Address Extra</label>
+						<input name="street-address-extra" type="text" value="Unit 69" class="form-control">
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="sr-only" for="city">City</label>
+								<input name="city" type="text" value="Washington" class="form-control">
+							</div>					
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<label class="sr-only" for="state">State</label>
+								<input name="state" type="text" value="DC" class="form-control">
+							</div>					
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="sr-only" for="zip">Zip</label>
+								<input name="zip" type="text" value="20001" class="form-control">
+							</div>					
+						</div>
+					</div>
+				</section>
+			</article>
+		</div>
+
+		<!-- SECOND COLUMN -->
+
+		<div class="col-md-6">
+			<article class="panel panel-default">
+				<header class="panel-heading">
+					<h1 class="h3">Billing Info</h1>
+				</header>
+				<section class="panel-body">
+					<div class="row">
+						<div class="col-md-7">
+							<p class="h4">
+								****-****-****-1234
+								<span class="label label-success">VISA</span>
+							</p>
+							<p><label>Expires:</label> 04/19</p>
+						</div>
+						<div class="col-md-5 text-right">
+							<p class="h4"><button class="btn btn-md btn-primary">View Details...</button></p>
+						</div>
+					</div>
+					<hr>
+					<article class="well well-sm">
+						<h2 class="h5">
+							<span class="pull-right"><input type="checkbox"> Same as shipping?</span>
+							Billing Address
+						</h2>
+						<div class="form-group">
+							<label class="sr-only" for="street-address">Street Address</label>
+							<input name="street-address" type="text" value="123 Any St" class="form-control">
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="street-address-extra">Street Address Extra</label>
+							<input name="street-address-extra" type="text" value="Unit 69" class="form-control">
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label class="sr-only" for="city">City</label>
+									<input name="city" type="text" value="Washington" class="form-control">
+								</div>					
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label class="sr-only" for="state">State</label>
+									<input name="state" type="text" value="DC" class="form-control">
+								</div>					
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label class="sr-only" for="zip">Zip</label>
+									<input name="zip" type="text" value="20001" class="form-control">
+								</div>					
+							</div>
+						</div>
+					</article>
+				</section>
+			</article>
+		</div>
+	</div>
+</form>
