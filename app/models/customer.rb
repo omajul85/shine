@@ -1,2 +1,10 @@
-class Customer < ApplicationRecord
+class Customer < ActiveRecord::Base
+	
+	def primary_shipping_address
+		self.customers_shipping_address.find_by(primary: true).address
+	end
+	
+	has_many :customers_shipping_address
+	has_one :customers_billing_address
+	has_one :billing_address, through: :customers_billing_address, source: :address
 end
