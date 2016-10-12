@@ -62,6 +62,31 @@ ALTER SEQUENCE addresses_id_seq OWNED BY addresses.id;
 
 
 --
+-- Name: states; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE states (
+    id integer NOT NULL,
+    code character varying NOT NULL,
+    name character varying NOT NULL
+);
+
+
+--
+-- Name: addresses_with_states; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW addresses_with_states AS
+ SELECT addresses.id,
+    addresses.street,
+    addresses.city,
+    states.code AS state,
+    addresses.zipcode
+   FROM (addresses
+     JOIN states ON ((states.id = addresses.state_id)));
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -97,6 +122,49 @@ CREATE TABLE customers_billing_addresses (
     customer_id integer NOT NULL,
     address_id integer NOT NULL
 );
+
+
+--
+-- Name: customers_shipping_addresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE customers_shipping_addresses (
+    id integer NOT NULL,
+    customer_id integer NOT NULL,
+    address_id integer NOT NULL,
+    "primary" boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: customer_details; Type: MATERIALIZED VIEW; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE MATERIALIZED VIEW customer_details AS
+ SELECT customers.id AS customer_id,
+    customers.first_name,
+    customers.last_name,
+    customers.email,
+    customers.username,
+    customers.created_at AS joined_at,
+    billing_address.id AS billing_address_id,
+    billing_address.street AS billing_street,
+    billing_address.city AS billing_city,
+    billing_state.code AS billing_state,
+    billing_address.zipcode AS billing_zipcode,
+    shipping_address.id AS shipping_address_id,
+    shipping_address.street AS shipping_street,
+    shipping_address.city AS shipping_city,
+    shipping_state.code AS shipping_state,
+    shipping_address.zipcode AS shipping_zipcode
+   FROM ((((((customers
+     JOIN customers_billing_addresses ON ((customers.id = customers_billing_addresses.customer_id)))
+     JOIN addresses billing_address ON ((billing_address.id = customers_billing_addresses.address_id)))
+     JOIN states billing_state ON ((billing_address.state_id = billing_state.id)))
+     JOIN customers_shipping_addresses ON (((customers.id = customers_shipping_addresses.customer_id) AND (customers_shipping_addresses."primary" = true))))
+     JOIN addresses shipping_address ON ((shipping_address.id = customers_shipping_addresses.address_id)))
+     JOIN states shipping_state ON ((shipping_address.state_id = shipping_state.id)))
+  WITH NO DATA;
 
 
 --
@@ -138,18 +206,6 @@ ALTER SEQUENCE customers_id_seq OWNED BY customers.id;
 
 
 --
--- Name: customers_shipping_addresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE customers_shipping_addresses (
-    id integer NOT NULL,
-    customer_id integer NOT NULL,
-    address_id integer NOT NULL,
-    "primary" boolean DEFAULT false NOT NULL
-);
-
-
---
 -- Name: customers_shipping_addresses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -174,17 +230,6 @@ ALTER SEQUENCE customers_shipping_addresses_id_seq OWNED BY customers_shipping_a
 
 CREATE TABLE schema_migrations (
     version character varying NOT NULL
-);
-
-
---
--- Name: states; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE states (
-    id integer NOT NULL,
-    code character varying NOT NULL,
-    name character varying NOT NULL
 );
 
 
@@ -355,6 +400,13 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: customer_details_customer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX customer_details_customer_id ON customer_details USING btree (customer_id);
+
+
+--
 -- Name: customers_lower_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -444,6 +496,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 SET search_path TO "$user",public;
 
-INSERT INTO schema_migrations (version) VALUES ('20161007081650'), ('20161007120900'), ('20161007125758'), ('20161008070308'), ('20161011142034');
+INSERT INTO schema_migrations (version) VALUES ('20161007081650'), ('20161007120900'), ('20161007125758'), ('20161008070308'), ('20161011142034'), ('20161012134441');
 
 

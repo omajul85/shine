@@ -27,10 +27,11 @@ class CustomersController < ApplicationController
 	end
 
 	def show
-		customer = Customer.find(params[:id])
-		respond_to do |format|
-			format.json { render json: customer }
-		end
-	end
+    customer_detail = CustomerDetail.find(params[:id])
+    # sleep 5 This line is to see in action the asynchronous call
+    respond_to do |format|
+      format.json { render json: customer_detail }
+    end
+  end
 	
 end
